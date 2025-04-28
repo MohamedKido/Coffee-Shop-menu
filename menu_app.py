@@ -3,7 +3,7 @@ import qrcode # type: ignore
 from io import BytesIO
 from PIL import Image
 
-st.set_page_config(page_title="African Aroma Cafe Menu", page_icon="☕", layout="centered")
+st.set_page_config(page_title="African Aroma Cafe Menu", page_icon="☕", layout="wide")
 
 # --- Menu Data ---
 menu = {
@@ -47,50 +47,42 @@ menu = {
     },
 }
 
-# --- Header Content ---
-st.image("logo.png", width=500)  # Larger logo width at the top
-st.title("African Aroma Cafe")
-st.caption("Select your favorite beverages and bites!")
+# --- Sidebar Content ---
+with st.sidebar:
+    st.image("logo.png", width=350) 
+    st.title("African Aroma Cafe")
+    st.divider()
 
-# --- QR Code Generation ---
-col1, col2, col3 = st.columns([1, 3, 1])  # Create columns for layout
+    st.subheader("📱 Scan Menu")
+    menu_url = "https://coffee-shop-menu-jvbwey72ay4snxkgs9x9k3.streamlit.app/" 
 
-with col3:
-    menu_url = "https://coffee-shop-menu-jvbwey72ay4snxkgs9x9k3.streamlit.app/"
     qr = qrcode.make(menu_url)
     buf = BytesIO()
     qr.save(buf)
-    st.image(Image.open(buf), width=100)  # Place QR code here
+    st.image(Image.open(buf), width=150)
+
+    st.divider()
+    st.subheader("🧾 Your Cart")
+    total_placeholder = st.empty()  # Dynamic total
+    submit_button = st.button("✅ Submit Order", use_container_width=True)
 
 # --- Main Content ---
+st.title("☕ African Aroma Cafe ")
+st.caption("Select your favorite beverages and bites!")
+
 selected_items = []
 total = 0
 
-# Using columns for a more centered layout
-col1, col2, col3 = st.columns([1, 3, 1])
+for section, items in menu.items():
+    st.header(section)
+    for item, price in items.items():
+        selected = st.checkbox(f"{item} - {price:,} TZS")
+        if selected:
+            selected_items.append((item, price))
+            total += price
 
-with col2:
-    for section, items in menu.items():
-        st.header(section)
-        for item, price in items.items():
-            selected = st.checkbox(f"{item} - {price:,} TZS")
-            if selected:
-                selected_items.append((item, price))
-                total += price
-
-# --- Footer (Total and Submit Order) ---
-st.divider()  # Optional divider before footer
-
-col1, col2, col3 = st.columns([1, 3, 1])  # New column setup for footer
-
-with col2:
-    # Centered total with the button aligned to the right
-    st.markdown(f"### **Total: {total:,} TZS**", unsafe_allow_html=True)
-    
-    # Align the button to the right of the total
-    col1, col2, col3 = st.columns([1, 4, 1])
-    with col2:
-        submit_button = st.button("✅ Submit Order", use_container_width=False)
+# Update total dynamically
+total_placeholder.markdown(f"### **Total: {total:,} TZS**")
 
 # After Submit
 if submit_button:
@@ -101,25 +93,3 @@ if submit_button:
             st.write(f"- {item}: {price:,} TZS")
     else:
         st.warning("⚠️ No items selected yet!")
-
-# --- Custom CSS for Styling ---
-st.markdown("""
-    <style>
-        /* Remove button background color */
-        .stButton button {
-            color: #4CAF50;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            padding: 10px 20px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border: 2px solid #4CAF50;
-        }
-        .stButton button:hover {
-            background-color: #45a049;
-            color: white;
-        }
-        .stCheckbox > div {
-            font-size: 1rem;
-        }
-    </style>
-""", unsafe_allow_html=True)
