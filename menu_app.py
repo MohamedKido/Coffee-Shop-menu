@@ -70,8 +70,19 @@ with st.sidebar:
 st.title("☕ 🍪 African Aroma Cafe ")
 st.caption("Select your favorite beverages and bites!")
 
+# --- After Submit Section (Top of the page) ---
 selected_items = []
 total = 0
+
+# If the submit button is clicked, show the order status and summary at the top
+if submit_button:
+    if selected_items:
+        st.success("✅ Order submitted successfully!")
+        st.write("**📝 Order Summary:**")
+        for item, price in selected_items:
+            st.write(f"- {item}: {price:,} TZS")
+    else:
+        st.warning("⚠️ No items selected yet!")
 
 # Checkboxes for menu selection
 for section, items in menu.items():
@@ -84,13 +95,3 @@ for section, items in menu.items():
 
 # Display total dynamically
 total_placeholder.markdown(f"### **Total: {total:,} TZS**")
-
-# **After Submit Section** - Display immediately below main content
-if submit_button:
-    if selected_items:
-        st.success("✅ Order submitted successfully!")
-        st.write("**📝 Order Summary:**")
-        for item, price in selected_items:
-            st.write(f"- {item}: {price:,} TZS")
-    else:
-        st.warning("⚠️ No items selected yet!")
