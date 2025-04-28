@@ -49,7 +49,7 @@ menu = {
 
 # --- Sidebar Content ---
 with st.sidebar:
-    st.image("logo.png", width=300) 
+    st.image("logo.png", width=350) 
     st.title("African Aroma Cafe")
     st.divider()
 
