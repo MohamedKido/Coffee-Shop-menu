@@ -67,7 +67,7 @@ with st.sidebar:
     submit_button = st.button("✅ Submit Order", use_container_width=True)
 
 # --- Main Content ---
-st.title("☕ African Aroma Cafe ")
+st.title("☕ 🍪 African Aroma Cafe ")
 st.caption("Select your favorite beverages and bites!")
 
 selected_items = []
