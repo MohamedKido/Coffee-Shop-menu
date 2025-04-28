@@ -49,12 +49,12 @@ menu = {
 
 # --- Sidebar Content ---
 with st.sidebar:
-    st.image("logo.png", width=350) 
+    st.image("logo.png", width=350)
     st.title("African Aroma Cafe")
     st.divider()
 
     st.subheader("📱 Scan Menu")
-    menu_url = "https://coffee-shop-menu-jvbwey72ay4snxkgs9x9k3.streamlit.app/" 
+    menu_url = "https://coffee-shop-menu-jvbwey72ay4snxkgs9x9k3.streamlit.app/"
 
     qr = qrcode.make(menu_url)
     buf = BytesIO()
@@ -73,6 +73,7 @@ st.caption("Select your favorite beverages and bites!")
 selected_items = []
 total = 0
 
+# Checkboxes for menu selection
 for section, items in menu.items():
     st.header(section)
     for item, price in items.items():
@@ -81,10 +82,10 @@ for section, items in menu.items():
             selected_items.append((item, price))
             total += price
 
-# Update total dynamically
+# Display total dynamically
 total_placeholder.markdown(f"### **Total: {total:,} TZS**")
 
-# After Submit
+# After Submit Section (Appears below after submitting the order)
 if submit_button:
     if selected_items:
         st.success("✅ Order submitted successfully!")
