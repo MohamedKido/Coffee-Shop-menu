@@ -85,7 +85,7 @@ for section, items in menu.items():
 # Display total dynamically
 total_placeholder.markdown(f"### **Total: {total:,} TZS**")
 
-# After Submit Section (Appears below after submitting the order)
+# **After Submit Section** - Display immediately below main content
 if submit_button:
     if selected_items:
         st.success("✅ Order submitted successfully!")
