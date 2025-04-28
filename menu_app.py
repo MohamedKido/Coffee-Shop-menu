@@ -1,3 +1,4 @@
+
 import streamlit as st
 import qrcode
 from io import BytesIO
@@ -93,4 +94,5 @@ if submit_button:
             st.write(f"- {item}: {price:,} TZS")
     else:
         st.warning("⚠️ No items selected yet!")
+
 
